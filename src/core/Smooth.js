@@ -2,10 +2,10 @@ import VirtualScroll from 'virtual-scroll'
 import debounce from 'lodash.debounce'
 
 import store from './store'
-import { 
-  Events, 
-  detect, 
-  preload 
+import {
+  Events,
+  detect,
+  preload
 } from '../utils'
 
 import options from './options'
@@ -30,7 +30,7 @@ export default class {
   }
 
   init(opts = {}) {
-    Object.assign(opts, options)
+    Object.assign(options, opts)
 
     const {
       el, elems,
@@ -58,7 +58,7 @@ export default class {
     this.setScrollLimit()
     this.cacheSections()
     this.addEvents()
-    
+
     if (options.preload) this.preload()
 
     this.state.initialised = true
@@ -122,13 +122,13 @@ export default class {
       const section = this.sections[i]
 
       section.el.style.transform = 'translate3d(0, 0, 0)'
-      
+
       const { top, bottom, offset } = this.getVars(section.el, section.speed)
 
       Object.assign(section, {
         top, bottom,
         offset
-      })     
+      })
     }
 
     this.transformSections()
@@ -161,7 +161,7 @@ export default class {
 
   tick = () => {
     const state = this.state
-    
+
     if (!state.stopped) {
       state.current += (state.target - state.current) * options.ease
       state.currentRounded = Math.round(state.current * 100) / 100
@@ -195,7 +195,7 @@ export default class {
   stop() {
     this.state.stopped = true
   }
-  
+
   resume() {
     this.state.stopped = false
   }
@@ -212,9 +212,9 @@ export default class {
     for (let i = 0; i < this.sections.length; i++) {
       const section = this.sections[i]
 
-      const { 
-        isVisible, 
-        transform 
+      const {
+        isVisible,
+        transform
       } = this.isVisible(section)
 
       if (isVisible || this.state.resizing || !section.out) {
@@ -264,7 +264,7 @@ export default class {
     this.clampTarget()
 
     // Emit scroll event
-    Events.emit('scroll', { 
+    Events.emit('scroll', {
       delta,
       target: state.target
     })
